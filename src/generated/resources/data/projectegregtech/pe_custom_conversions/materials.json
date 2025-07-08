@@ -44,6 +44,11 @@
       {
         "type": "projecte:item",
         "emc_value": 73728,
+        "tag": "c:ingots/indium"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 73728,
         "tag": "c:ingots/molybdenum"
       },
       {
@@ -143,6 +148,11 @@
       },
       {
         "type": "projecte:item",
+        "emc_value": 18432,
+        "tag": "c:ingots/epoxy"
+      },
+      {
+        "type": "projecte:item",
         "emc_value": 9216,
         "tag": "c:ingots/silicone_rubber"
       },
@@ -153,8 +163,38 @@
       },
       {
         "type": "projecte:item",
+        "emc_value": 8,
+        "tag": "c:dusts/wood"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2304,
+        "tag": "c:dusts/iron"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1152,
+        "tag": "c:dusts/sulfur"
+      },
+      {
+        "type": "projecte:item",
         "emc_value": 1152,
         "tag": "c:dusts/arsenic"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1152,
+        "tag": "c:dusts/sodium"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2304,
+        "tag": "c:dusts/boron"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1152,
+        "tag": "c:dusts/phosphorus"
       },
       {
         "type": "projecte:item",
@@ -175,6 +215,21 @@
         "type": "projecte:item",
         "emc_value": 884736,
         "tag": "c:dusts/enriched_naquadah"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "tag": "c:dusts/meat"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "tag": "c:dusts/gelatin"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 8192,
+        "id": "gtceu:stem_cells"
       }
     ]
   }

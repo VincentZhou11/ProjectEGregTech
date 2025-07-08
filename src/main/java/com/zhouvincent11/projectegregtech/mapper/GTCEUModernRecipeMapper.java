@@ -3,44 +3,23 @@ package com.zhouvincent11.projectegregtech.mapper;
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.recipe.chance.logic.ChanceLogic;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
-import com.gregtechceu.gtceu.api.registry.GTRegistries;
-import com.gregtechceu.gtceu.data.item.GTItems;
 import com.gregtechceu.gtceu.data.recipe.GTRecipeTypes;
-import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
-import com.lowdragmc.lowdraglib.utils.XmlUtils;
-import com.mojang.logging.LogUtils;
-import com.tterrag.registrate.util.entry.ItemEntry;
 import com.zhouvincent11.projectegregtech.Projectegregtech;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMaps;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Object2IntRBTreeMap;
 import moze_intel.projecte.api.mapper.EMCMapper;
 import moze_intel.projecte.api.mapper.IEMCMapper;
 import moze_intel.projecte.api.mapper.collector.IMappingCollector;
-import moze_intel.projecte.api.nss.NSSFluid;
-import moze_intel.projecte.api.nss.NSSItem;
 import moze_intel.projecte.api.nss.NormalizedSimpleStack;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.ReloadableServerResources;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
-import org.slf4j.Logger;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.zhouvincent11.projectegregtech.mapper.GTCEUModernRecipeMapper.RecipeRelationship.MANY2MANY;
 import static com.zhouvincent11.projectegregtech.mapper.GTCEUModernRecipeMapper.RecipeRelationship.MANY2ONE;
@@ -49,20 +28,7 @@ import static com.zhouvincent11.projectegregtech.mapper.GTCEUModernRecipeMapper.
 @EMCMapper
 public class GTCEUModernRecipeMapper implements IEMCMapper<NormalizedSimpleStack, Long> {
 
-    public static final Set<Item> NON_CONSUMED_ITEMS = new HashSet<>();
 
-    static {
-        NON_CONSUMED_ITEMS.add(GTItems.INTEGRATED_CIRCUIT.asItem());
-        NON_CONSUMED_ITEMS.add(GTItems.TOOL_DATA_STICK.asItem());
-        NON_CONSUMED_ITEMS.add(GTItems.TOOL_DATA_ORB.asItem());
-        NON_CONSUMED_ITEMS.add(GTItems.TOOL_DATA_MODULE.asItem());
-
-        // Some indices in shape extruders array are unused
-        NON_CONSUMED_ITEMS.addAll(Arrays.stream(GTItems.SHAPE_EXTRUDERS).filter(Objects::nonNull).map(entry -> entry.asItem()).toList());
-        NON_CONSUMED_ITEMS.addAll(Arrays.stream(GTItems.SHAPE_MOLDS).map(entry -> entry.asItem()).toList());
-        NON_CONSUMED_ITEMS.addAll(GTItems.GLASS_LENSES.values().stream().map(entry -> entry.asItem()).toList());
-
-    }
 
     @Override
     public String getName() {
@@ -80,9 +46,7 @@ public class GTCEUModernRecipeMapper implements IEMCMapper<NormalizedSimpleStack
     }
 
 
-    private int getMultiplier (Content output) {
-        return Math.ceilDiv(output.maxChance, output.chance);
-    }
+
 
     private Object2IntMap<NormalizedSimpleStack> applyMultiplier (Object2IntMap<NormalizedSimpleStack> input, double multiplier) {
         Object2IntMap<NormalizedSimpleStack> output = new Object2IntOpenHashMap<>();
@@ -97,6 +61,7 @@ public class GTCEUModernRecipeMapper implements IEMCMapper<NormalizedSimpleStack
     public static Set<GTRecipe> many2oneRecipeMap = new HashSet<>();
     public static int many2manyRecipeCount = 0;
     public static Set<GTRecipe> many2manyRecipeMap = new HashSet<>();
+
 
 
     public enum RecipeRelationship {
@@ -137,109 +102,128 @@ public class GTCEUModernRecipeMapper implements IEMCMapper<NormalizedSimpleStack
         Projectegregtech.LOGGER.info("Total Recipe Count: {}", totalRecipeCount);
         Projectegregtech.LOGGER.info("Many2One Recipe Count: {}, percentage: {}", many2oneRecipeCount, many2oneRecipeCount * 100.0 / totalRecipeCount);
         Projectegregtech.LOGGER.info("Many2Many Recipe Count: {}, percentage: {}", many2manyRecipeCount, many2manyRecipeCount * 100.0 / totalRecipeCount);
+
+        totalRecipeCount = 0;
+        many2oneRecipeCount = 0;
+        many2manyRecipeCount = 0;
     }
 
-    private void processGTRecipe (GTRecipe recipe, IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector, Set<NormalizedSimpleStack> visitedItems) {
+    private void mapOnlyMany2One(Object2IntMap<NormalizedSimpleStack> inputMap,
+                                 Map<NormalizedSimpleStack, Integer> outputMap,
+                                 Map<NormalizedSimpleStack, Integer> outputMultiplierMap,
+                                 IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector) {
+        int totalOutputs = outputMap.size();
+
+        if (totalOutputs == 0) {
+//            Projectegregtech.LOGGER.info("No outputs for recipe");
+        }
+        else if (totalOutputs == 1) {
+            NormalizedSimpleStack output = outputMap.keySet().stream().findFirst().get();
+            int outputAmount = outputMap.get(output);
+            int multiplier = outputMultiplierMap.get(output);
+
+
+            iMappingCollector.addConversion(outputAmount, output, applyMultiplier(inputMap, multiplier));
+        }
+        else {
+//            Projectegregtech.LOGGER.info("Multiple outputs for recipe");
+        }
+    }
+
+    private void mapAll (Object2IntMap<NormalizedSimpleStack> inputMap,
+                         Map<NormalizedSimpleStack, Integer> outputMap,
+                         Map<NormalizedSimpleStack, Integer> outputMultiplierMap,
+                         IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector) {
+        for (NormalizedSimpleStack output : outputMap.keySet()) {
+
+            int outputAmount = outputMap.get(output);
+            int multiplier = outputMultiplierMap.get(output);
+
+            iMappingCollector.addConversion(outputAmount, output, applyMultiplier(inputMap, multiplier));
+        }
 
     }
 
-    private void processGTRecipes (String name, List<RecipeHolder<GTRecipe>> recipeHolders, IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector, Set<NormalizedSimpleStack> visitedItems) {
-        Projectegregtech.LOGGER.info("Adding {} recipes", name);
-
-        recipeHolders.stream().forEach(recipe -> {
-            performCounts(recipe.value());
-
-            List<Content> itemInputs = recipe.value().getInputContents(ItemRecipeCapability.CAP);
-            List<Content> fluidInputs = recipe.value().getInputContents(FluidRecipeCapability.CAP);
-
-            List<Content> itemOutputs = recipe.value().getOutputContents(ItemRecipeCapability.CAP);
-            List<Content> fluidOutputs = recipe.value().getOutputContents(FluidRecipeCapability.CAP);
-
-            Object2IntMap<NormalizedSimpleStack> inputMap = new Object2IntOpenHashMap<>();
-
-            itemInputs.stream().forEach(content -> {
-                if (content.getContent() instanceof SizedIngredient) {
-                    SizedIngredient ingredient = (SizedIngredient) content.getContent();
-
-                    if (ingredient.getItems().length <=0 || NON_CONSUMED_ITEMS.contains(ingredient.getItems()[0].getItem())) return;
 
 
-                    inputMap.put(NSSItem.createItem(ingredient.getItems()[0]), ingredient.count());
-                }
-                else {
-                    Projectegregtech.LOGGER.info("Non-SizedIngredient Item input: {}", content.getContent());
-                }
+
+
+
+    public static Set<NormalizedSimpleStack> achievableItems = new HashSet<>();
+    public static Set<NormalizedSimpleStack> unachievableItems = new HashSet<>();
+
+    
+    
+    public class GTRecipeProcessor {
+        
+        public IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector;
+
+        public GTRecipeProcessor(IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector) {
+            this.iMappingCollector = iMappingCollector;
+        }
+
+        private void processGTRecipe (GTRecipe recipe,
+                                      IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector, boolean verbose) {
+            performCounts(recipe);
+            GTRecipeParser parser = new GTRecipeParser(recipe);
+            if (verbose) {Projectegregtech.LOGGER.info(parser.toString());}
+            mapOnlyMany2One(parser.inputs, parser.outputs, parser.outputMultipliers, iMappingCollector);
+
+        }
+
+        public void processGTRecipes (String name, List<RecipeHolder<GTRecipe>> recipeHolders, boolean verbose) {
+            Projectegregtech.LOGGER.info("Adding {} recipes", name);
+
+            recipeHolders.stream().forEach(recipe -> {
+                processGTRecipe(recipe.value(), this.iMappingCollector, verbose);
             });
 
-            fluidInputs.stream().forEach(content -> {
-                if (content.getContent() instanceof SizedFluidIngredient) {
-                    SizedFluidIngredient ingredient = (SizedFluidIngredient) content.getContent();
+            printStatistics();
+        }
 
-                    if (ingredient.getFluids().length <=0) return;
+        public void processGTRecipes (String name, List<RecipeHolder<GTRecipe>> recipeHolders) {
+            Projectegregtech.LOGGER.info("Adding {} recipes", name);
 
-                    inputMap.put(NSSFluid.createFluid(ingredient.getFluids()[0]), ingredient.amount());
-                }
-                else {
-                    Projectegregtech.LOGGER.info("Non-SizedFluidIngredient Fluid input: {}", content.getContent());
-                }
+            recipeHolders.stream().forEach(recipe -> {
+                processGTRecipe(recipe.value(), this.iMappingCollector, false);
             });
 
-            Map<NormalizedSimpleStack, Integer> outputMap = new HashMap<>();
-            Map<NormalizedSimpleStack, Integer> outputMultiplierMap = new HashMap<>();
+            printStatistics();
+        }
 
-            itemOutputs.stream().forEach(content -> {
-                if (content.getContent() instanceof SizedIngredient) {
-                    SizedIngredient ingredient = (SizedIngredient) content.getContent();
+        private void processVacuumFreezerRecipes(GTRecipe recipe,
+                                                 IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector,
+                                                 boolean verbose) {
+            performCounts(recipe);
+            GTRecipeParser parser = new GTRecipeParser(recipe);
 
-
-                    NSSItem nssItem = NSSItem.createItem(ingredient.getItems()[0]);
-
-                    outputMap.put(nssItem, ingredient.count());
-                    outputMultiplierMap.put(nssItem, getMultiplier(content));
-                }
-                else {
-                    Projectegregtech.LOGGER.info("Non-SizedIngredient Item output: {}", content.getContent());
-                }
-            });
-
-            fluidOutputs.stream().forEach(content -> {
-                if (content.getContent() instanceof SizedFluidIngredient) {
-                    SizedFluidIngredient ingredient = (SizedFluidIngredient) content.getContent();
-
-                    NSSFluid nssFluid = NSSFluid.createFluid(ingredient.getFluids()[0]);
-
-                    outputMultiplierMap.put(nssFluid, getMultiplier(content));
-                    outputMap.put(nssFluid, ingredient.amount());
-                }
-                else {
-                    Projectegregtech.LOGGER.info("Non-SizedFluidIngredient Fluid output: {}", content.getContent());
-                }
-            });
-
-//            Projectegregtech.LOGGER.info("{} Recipe - Inputs: {} | Outputs: {}", name, inputMap.keySet().stream().map(NormalizedSimpleStack::toString).reduce((a,b) -> a + ", " + b).orElse(""), outputMap.keySet().stream().map(NormalizedSimpleStack::toString).reduce((a,b) -> a + ", " + b).orElse(""));
-
-            int totalOutputs = outputMap.size();
-
-
-
-            for (NormalizedSimpleStack output : outputMap.keySet()) {
-
-                if (visitedItems.contains(output)) {
-                    continue;
-                }
-
-                int outputAmount = outputMap.get(output);
-                int multiplier = outputMultiplierMap.get(output);
-
-//                visitedItems.add(output);
-
-                iMappingCollector.addConversion(outputAmount, output, applyMultiplier(inputMap, multiplier));
+            // Gas liquefaction recipes
+            if(parser.getFluidInputsSize() == 1 && parser.getFluidOutputsSize() == 1 && parser.getItemInputsSize() == 0 && parser.getItemOutputsSize() == 0) {
+                mapOnlyMany2One(parser.fluidInputs, parser.fluidOutputs, parser.outputMultipliers, iMappingCollector);
             }
-            // Parameters: outputAmount, outputItem as NormalizedSimpleStack, input ingredient as mapping
+            // Hot ingot cooling with gas coolant, ignore gas coolant
+            else if(parser.getFluidInputsSize() == 1 && parser.getFluidOutputsSize() == 1 && parser.getItemInputsSize() == 1 && parser.getItemOutputsSize() == 1) {
+                mapOnlyMany2One(parser.itemInputs, parser.itemOutputs, parser.outputMultipliers, iMappingCollector);
+            }
+            // Hot ingot cooling
+            else if(parser.getFluidInputsSize() == 0 && parser.getFluidOutputsSize() == 0 && parser.getItemInputsSize() == 1 && parser.getItemOutputsSize() == 1) {
+                mapOnlyMany2One(parser.itemInputs, parser.itemOutputs, parser.outputMultipliers, iMappingCollector);
+            }
+            else {
+                mapOnlyMany2One(parser.inputs, parser.outputs, parser.outputMultipliers, iMappingCollector);
+            }
+        }
 
-        });
+        public void processVacuumFreezerRecipes (String name, List<RecipeHolder<GTRecipe>> recipeHolders) {
+            Projectegregtech.LOGGER.info("Adding {} recipes", name);
 
-        printStatistics();
+            recipeHolders.stream().forEach(recipe -> {
+                processVacuumFreezerRecipes(recipe.value(), this.iMappingCollector, false);
+            });
+
+            printStatistics();
+        }
+
     }
 
     @Override
@@ -252,65 +236,45 @@ public class GTCEUModernRecipeMapper implements IEMCMapper<NormalizedSimpleStack
         
         Set<NormalizedSimpleStack> visitedItems = new HashSet<>(); 
         
-//        int counter = 0;
-//
-//        Projectegregtech.LOGGER.info("Adding extruder shapes to blacklist");
-//        for (ItemEntry<Item> entry: GTItems.SHAPE_EXTRUDERS) {
-//            if (entry == null) {
-//                Projectegregtech.LOGGER.info("Null entry at index {}", counter);
-//            }
-//            else {
-//                NON_CONSUMED_ITEMS.add(entry.asItem());
-//            }
-//            counter++;
-//        }
-//        Projectegregtech.LOGGER.info("Adding molds to blacklist");
-//        counter = 0;
-//        for (ItemEntry<Item> entry: GTItems.SHAPE_MOLDS) {
-//            if (entry == null) {
-//                Projectegregtech.LOGGER.info("Null entry at index {}", counter);
-//            }
-//            else {
-//                NON_CONSUMED_ITEMS.add(entry.asItem());
-//            }
-//            counter++;
-//        }
+        GTRecipeProcessor gtRecipeProcessor = new GTRecipeProcessor(iMappingCollector);
 
+        gtRecipeProcessor.processGTRecipes("Wiremill", mgr.getAllRecipesFor(GTRecipeTypes.WIREMILL_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Lathe",mgr.getAllRecipesFor(GTRecipeTypes.LATHE_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Mixer",mgr.getAllRecipesFor(GTRecipeTypes.MIXER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Cutter",mgr.getAllRecipesFor(GTRecipeTypes.CUTTER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Extruder",mgr.getAllRecipesFor(GTRecipeTypes.EXTRUDER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Fluid Solidifier",mgr.getAllRecipesFor(GTRecipeTypes.FLUID_SOLIDFICATION_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Macerator",mgr.getAllRecipesFor(GTRecipeTypes.MACERATOR_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Bender",mgr.getAllRecipesFor(GTRecipeTypes.BENDER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Forming Press",mgr.getAllRecipesFor(GTRecipeTypes.FORMING_PRESS_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Forge Hammer",mgr.getAllRecipesFor(GTRecipeTypes.FORGE_HAMMER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Assembler",mgr.getAllRecipesFor(GTRecipeTypes.ASSEMBLER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("CircuitAssembler",mgr.getAllRecipesFor(GTRecipeTypes.CIRCUIT_ASSEMBLER_RECIPES));
+//        gtRecipeProcessor.processGTRecipes("Centrifuge",mgr.getAllRecipesFor(GTRecipeTypes.CENTRIFUGE_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Electric Blast Furnace",mgr.getAllRecipesFor(GTRecipeTypes.BLAST_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Alloy Blast Smelter",mgr.getAllRecipesFor(GTRecipeTypes.ALLOY_SMELTER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Laser Engraver",mgr.getAllRecipesFor(GTRecipeTypes.LASER_ENGRAVER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Chemical Reactor",mgr.getAllRecipesFor(GTRecipeTypes.CHEMICAL_RECIPES), true);
+        gtRecipeProcessor.processGTRecipes("Chemical Bath",mgr.getAllRecipesFor(GTRecipeTypes.CHEMICAL_BATH_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Electrolyzer",mgr.getAllRecipesFor(GTRecipeTypes.ELECTROLYZER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Polarizer",mgr.getAllRecipesFor(GTRecipeTypes.POLARIZER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Distillation Tower",mgr.getAllRecipesFor(GTRecipeTypes.DISTILLATION_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Fusion Reactor",mgr.getAllRecipesFor(GTRecipeTypes.FUSION_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Fermenting",mgr.getAllRecipesFor(GTRecipeTypes.FERMENTING_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Assembly Line",mgr.getAllRecipesFor(GTRecipeTypes.ASSEMBLY_LINE_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Pyrolyse Oven",mgr.getAllRecipesFor(GTRecipeTypes.PYROLYSE_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Cracking", mgr.getAllRecipesFor(GTRecipeTypes.CRACKING_RECIPES));
+        gtRecipeProcessor.processVacuumFreezerRecipes("Vacuum Freezer", mgr.getAllRecipesFor(GTRecipeTypes.VACUUM_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Extractor", mgr.getAllRecipesFor(GTRecipeTypes.EXTRACTOR_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Polarizer", mgr.getAllRecipesFor(GTRecipeTypes.POLARIZER_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Autoclave", mgr.getAllRecipesFor(GTRecipeTypes.AUTOCLAVE_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Large Chemical Reactor", mgr.getAllRecipesFor(GTRecipeTypes.LARGE_CHEMICAL_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Arc Furnace", mgr.getAllRecipesFor(GTRecipeTypes.ARC_FURNACE_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Compresser", mgr.getAllRecipesFor(GTRecipeTypes.COMPRESSOR_RECIPES));
+        gtRecipeProcessor.processGTRecipes("Fluid Heater", mgr.getAllRecipesFor(GTRecipeTypes.FLUID_HEATER_RECIPES));
 
-        processGTRecipes("Wiremill", mgr.getAllRecipesFor(GTRecipeTypes.WIREMILL_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Lathe",mgr.getAllRecipesFor(GTRecipeTypes.LATHE_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Mixer",mgr.getAllRecipesFor(GTRecipeTypes.MIXER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Cutter",mgr.getAllRecipesFor(GTRecipeTypes.CUTTER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Extruder",mgr.getAllRecipesFor(GTRecipeTypes.EXTRUDER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Fluid Solidifier",mgr.getAllRecipesFor(GTRecipeTypes.FLUID_SOLIDFICATION_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Macerator",mgr.getAllRecipesFor(GTRecipeTypes.MACERATOR_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Bender",mgr.getAllRecipesFor(GTRecipeTypes.BENDER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Forming Press",mgr.getAllRecipesFor(GTRecipeTypes.FORMING_PRESS_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Forge Hammer",mgr.getAllRecipesFor(GTRecipeTypes.FORGE_HAMMER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Assembler",mgr.getAllRecipesFor(GTRecipeTypes.ASSEMBLER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("CircuitAssembler",mgr.getAllRecipesFor(GTRecipeTypes.CIRCUIT_ASSEMBLER_RECIPES), iMappingCollector, visitedItems);
-//        processGTRecipes("Centrifuge",mgr.getAllRecipesFor(GTRecipeTypes.CENTRIFUGE_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Electric Blast Furnace",mgr.getAllRecipesFor(GTRecipeTypes.BLAST_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Laser Engraver",mgr.getAllRecipesFor(GTRecipeTypes.LASER_ENGRAVER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Chemical Reactor",mgr.getAllRecipesFor(GTRecipeTypes.CHEMICAL_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Chemical Bath",mgr.getAllRecipesFor(GTRecipeTypes.CHEMICAL_BATH_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Electrolyzer",mgr.getAllRecipesFor(GTRecipeTypes.ELECTROLYZER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Polarizer",mgr.getAllRecipesFor(GTRecipeTypes.POLARIZER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Distillation Tower",mgr.getAllRecipesFor(GTRecipeTypes.DISTILLATION_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Fusion Reactor",mgr.getAllRecipesFor(GTRecipeTypes.FUSION_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Fermenting",mgr.getAllRecipesFor(GTRecipeTypes.FERMENTING_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Assembly Line",mgr.getAllRecipesFor(GTRecipeTypes.ASSEMBLY_LINE_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Pyrolyse Oven",mgr.getAllRecipesFor(GTRecipeTypes.PYROLYSE_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Cracking", mgr.getAllRecipesFor(GTRecipeTypes.CRACKING_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Vacuum Freezer", mgr.getAllRecipesFor(GTRecipeTypes.VACUUM_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Extractor", mgr.getAllRecipesFor(GTRecipeTypes.EXTRACTOR_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Polarizer", mgr.getAllRecipesFor(GTRecipeTypes.POLARIZER_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Autoclave", mgr.getAllRecipesFor(GTRecipeTypes.AUTOCLAVE_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Large Chemical Reactor", mgr.getAllRecipesFor(GTRecipeTypes.LARGE_CHEMICAL_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Arc Furnace", mgr.getAllRecipesFor(GTRecipeTypes.ARC_FURNACE_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Compresser", mgr.getAllRecipesFor(GTRecipeTypes.COMPRESSOR_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Brewing", mgr.getAllRecipesFor(GTRecipeTypes.BREWING_RECIPES), iMappingCollector, visitedItems);
-        processGTRecipes("Distillery", mgr.getAllRecipesFor(GTRecipeTypes.DISTILLERY_RECIPES), iMappingCollector, visitedItems);
+        gtRecipeProcessor.processGTRecipes("Brewing", mgr.getAllRecipesFor(GTRecipeTypes.BREWING_RECIPES), true);
+        gtRecipeProcessor.processGTRecipes("Distillery", mgr.getAllRecipesFor(GTRecipeTypes.DISTILLERY_RECIPES), true);
 
 
         Projectegregtech.LOGGER.info("Finished adding custom mappings");

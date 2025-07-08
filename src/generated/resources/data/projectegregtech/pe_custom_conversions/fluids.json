@@ -65,6 +65,11 @@
         "type": "projecte:fluid",
         "emc_value": 128,
         "tag": "c:methanol"
+      },
+      {
+        "type": "projecte:fluid",
+        "emc_value": 4,
+        "tag": "c:glue"
       }
     ]
   }

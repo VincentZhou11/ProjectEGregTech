@@ -1,5 +1,6 @@
 package com.zhouvincent11.projectegregtech.datagen;
 
+import com.gregtechceu.gtceu.data.item.GTItems;
 import com.zhouvincent11.projectegregtech.Projectegregtech;
 import moze_intel.projecte.api.data.CustomConversionProvider;
 import moze_intel.projecte.api.nss.NSSFluid;
@@ -44,7 +45,6 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
 
         createConversionBuilder(Projectegregtech.RL("materials"))
                 .before(ingotTag("zinc"), 128*9)
-
                 .before(ingotTag("cobalt"), 4096*9)
                 .before(ingotTag("antimony"), 4096*9)
 
@@ -53,6 +53,7 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
                 .before(ingotTag("chromium"), 8192*9)
                 .before(ingotTag("titanium"), 8192*9)
                 .before(ingotTag("gallium"), 8192*9)
+                .before(ingotTag("indium"), 8192*9)
                 .before(ingotTag("molybdenum"), 8192*9)
                 .before(ingotTag("platinum"), 8192*9)
                 .before(ingotTag("neodymium"), 8192*9)
@@ -68,6 +69,8 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
                 .before(ingotTag("europium"), 16384*9)
                 .before(ingotTag("ruthenium"), 16384*9)
                 .before(ingotTag("yttrium"), 16384*9)
+                .before(ingotTag("tantalum"), 16384*9)
+
 
 
                 .before(ingotTag("naquadah"), 32768*9)
@@ -80,17 +83,35 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
                 .before(ingotTag("polyvinyl_chloride"), 512*9)
                 .before(ingotTag("polyphenylene_sulfide"), 512*9)
                 .before(ingotTag("polybenzimidazole"), 2048*9)
+                .before(ingotTag("epoxy"), 2048*9)
+
 
                 // Rubbers
                 .before(ingotTag("silicone_rubber"), 1024*9)
                 .before(ingotTag("styrene_butadiene_rubber"), 2048*9)
 
-                // Dusts
+                // Dusts\
+                .before(dustTag("wood"), 8)
+                .before(dustTag("iron"), 256*9)
+                .before(dustTag("sulfur"), 128*9)
                 .before(dustTag("arsenic"), 128*9)
+                .before(dustTag("sodium"), 128*9)
+                .before(dustTag("boron"), 256*9)
+
+
+                .before(dustTag("phosphorus"), 128*9)
+
                 .before(dustTag("graphite"), 128*9)
                 .before(dustTag("barium"), 1024*9)
                 .before(dustTag("apatite"), 1024*9)
+//                .before(dustTag("sodium_hydroxide"), 256*9)
+
                 .before(dustTag("enriched_naquadah"), 3*32768*9)
+                .before(dustTag("meat"), 64)
+                .before(dustTag("gelatin"), 64)
+
+                .before(GTItems.STEM_CELLS, 8192)
+
 
 
 
@@ -112,6 +133,9 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
                 .before(tag("fluorine"), 128)
 
                 .before(tag("methanol"), 128)
+
+                .before(tag("glue"), 4)
+
 
 
 
