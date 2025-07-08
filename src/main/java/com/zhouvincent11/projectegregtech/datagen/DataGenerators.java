@@ -10,7 +10,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = Projectegregtech.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Projectegregtech.MODID)
 public class DataGenerators {
 
     @SubscribeEvent
