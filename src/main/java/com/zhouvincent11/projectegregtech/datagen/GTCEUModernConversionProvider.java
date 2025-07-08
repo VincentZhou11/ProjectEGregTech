@@ -95,17 +95,14 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
                 .before(dustTag("iron"), 256*9)
                 .before(dustTag("sulfur"), 128*9)
                 .before(dustTag("arsenic"), 128*9)
+                .before(dustTag("silicon"), 128*9)
                 .before(dustTag("sodium"), 128*9)
                 .before(dustTag("boron"), 256*9)
-
-
+                .before(dustTag("potassium"), 256*9)
                 .before(dustTag("phosphorus"), 128*9)
-
                 .before(dustTag("graphite"), 128*9)
                 .before(dustTag("barium"), 1024*9)
                 .before(dustTag("apatite"), 1024*9)
-//                .before(dustTag("sodium_hydroxide"), 256*9)
-
                 .before(dustTag("enriched_naquadah"), 3*32768*9)
                 .before(dustTag("meat"), 64)
                 .before(dustTag("gelatin"), 64)
@@ -133,7 +130,13 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
                 .before(tag("fluorine"), 128)
 
                 .before(tag("methanol"), 128)
-
+                .before(tag("ethylene"), 128)
+                .before(tag("propane"), 128)
+                .before(tag("cumene"), 128)
+                .before(tag("benzene"), 128)
+                .before(tag("cyclohexane"), 128)
+                .before(tag("ammonia"), 128)
+                .before(tag("nitric_oxide"), 128)
                 .before(tag("glue"), 4)
 
 

@@ -30,20 +30,22 @@ public class GTRecipeProcessor {
     private void mapOnlyMany2One(Object2IntMap<NormalizedSimpleStack> inputMap,
                                  Map<NormalizedSimpleStack, Integer> outputMap,
                                  Map<NormalizedSimpleStack, Integer> outputMultiplierMap,
-                                 IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector) {
+                                 IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector,
+                                 boolean verbose) {
         int totalOutputs = outputMap.size();
 
         if (totalOutputs == 0) {
-//            Projectegregtech.LOGGER.info("No outputs for recipe");
+            if(verbose) Projectegregtech.LOGGER.info("No outputs for recipe");
         }
         else if (totalOutputs == 1) {
             NormalizedSimpleStack output = outputMap.keySet().stream().findFirst().get();
             int outputAmount = outputMap.get(output);
             int multiplier = outputMultiplierMap.get(output);
             iMappingCollector.addConversion(outputAmount, output, applyMultiplier(inputMap, multiplier));
+            if (verbose) Projectegregtech.LOGGER.info("Mapped {} to {}x{}", inputMap, output, outputAmount);
         }
         else {
-//            Projectegregtech.LOGGER.info("Multiple outputs for recipe");
+            if(verbose) Projectegregtech.LOGGER.info("Multiple outputs for recipe");
         }
     }
 
@@ -66,7 +68,7 @@ public class GTRecipeProcessor {
         GTRecipeParser parser = new GTRecipeParser(recipe);
         if (verbose) {
             Projectegregtech.LOGGER.info(parser.toString());}
-        mapOnlyMany2One(parser.inputs, parser.outputs, parser.outputMultipliers, iMappingCollector);
+        mapOnlyMany2One(parser.getFilteredInputs(), parser.getFilteredOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
 
     }
 
@@ -96,18 +98,18 @@ public class GTRecipeProcessor {
 
         // Gas liquefaction recipes
         if(parser.getFluidInputsSize() == 1 && parser.getFluidOutputsSize() == 1 && parser.getItemInputsSize() == 0 && parser.getItemOutputsSize() == 0) {
-            mapOnlyMany2One(parser.fluidInputs, parser.fluidOutputs, parser.outputMultipliers, iMappingCollector);
+            mapOnlyMany2One(parser.getFilteredFluidInputs(), parser.getFilteredFluidOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
         }
         // Hot ingot cooling with gas coolant, ignore gas coolant
         else if(parser.getFluidInputsSize() == 1 && parser.getFluidOutputsSize() == 1 && parser.getItemInputsSize() == 1 && parser.getItemOutputsSize() == 1) {
-            mapOnlyMany2One(parser.itemInputs, parser.itemOutputs, parser.outputMultipliers, iMappingCollector);
+            mapOnlyMany2One(parser.getFilteredItemInputs(), parser.getFilteredItemOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
         }
         // Hot ingot cooling
         else if(parser.getFluidInputsSize() == 0 && parser.getFluidOutputsSize() == 0 && parser.getItemInputsSize() == 1 && parser.getItemOutputsSize() == 1) {
-            mapOnlyMany2One(parser.itemInputs, parser.itemOutputs, parser.outputMultipliers, iMappingCollector);
+            mapOnlyMany2One(parser.getFilteredItemInputs(), parser.getFilteredItemOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
         }
         else {
-            mapOnlyMany2One(parser.inputs, parser.outputs, parser.outputMultipliers, iMappingCollector);
+            mapOnlyMany2One(parser.getFilteredInputs(), parser.getFilteredOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
         }
     }
 

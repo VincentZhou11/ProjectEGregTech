@@ -68,6 +68,41 @@
       },
       {
         "type": "projecte:fluid",
+        "emc_value": 128,
+        "tag": "c:ethylene"
+      },
+      {
+        "type": "projecte:fluid",
+        "emc_value": 128,
+        "tag": "c:propane"
+      },
+      {
+        "type": "projecte:fluid",
+        "emc_value": 128,
+        "tag": "c:cumene"
+      },
+      {
+        "type": "projecte:fluid",
+        "emc_value": 128,
+        "tag": "c:benzene"
+      },
+      {
+        "type": "projecte:fluid",
+        "emc_value": 128,
+        "tag": "c:cyclohexane"
+      },
+      {
+        "type": "projecte:fluid",
+        "emc_value": 128,
+        "tag": "c:ammonia"
+      },
+      {
+        "type": "projecte:fluid",
+        "emc_value": 128,
+        "tag": "c:nitric_oxide"
+      },
+      {
+        "type": "projecte:fluid",
         "emc_value": 4,
         "tag": "c:glue"
       }

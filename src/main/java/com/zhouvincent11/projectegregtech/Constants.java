@@ -19,8 +19,6 @@ public class Constants {
     public static final Set<Item> NON_CONSUMED_ITEMS = new HashSet<>();
     public static final Set<TagKey<Item>> NON_CONSUMED_ITEM_TAGS = new HashSet<>();
 
-    public static final Set<Fluid> IGNORED_FLUIDS = new HashSet<>();
-
     public static final Set<TagKey<Fluid>> IGNORED_FLUID_TAGS = new HashSet<>();
 
     static {
@@ -33,13 +31,12 @@ public class Constants {
         NON_CONSUMED_ITEMS.addAll(Arrays.stream(GTItems.SHAPE_EXTRUDERS).filter(Objects::nonNull).map(entry -> entry.asItem()).toList());
         NON_CONSUMED_ITEMS.addAll(Arrays.stream(GTItems.SHAPE_MOLDS).map(entry -> entry.asItem()).toList());
         NON_CONSUMED_ITEMS.addAll(GTItems.GLASS_LENSES.values().stream().map(entry -> entry.asItem()).toList());
-        Projectegregtech.LOGGER.info("Lenses: {}", GTItems.GLASS_LENSES.values().stream().map(Objects::toString).reduce((a, b) -> a+", "+b));
+//        Projectegregtech.LOGGER.info("Lenses: {}", GTItems.GLASS_LENSES.values().stream().map(Objects::toString).reduce((a, b) -> a+", "+b));
 
         TagKey<Item> lenses = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:lenses"));
         NON_CONSUMED_ITEM_TAGS.add(lenses);
 
-        IGNORED_FLUIDS.add(net.minecraft.world.level.material.Fluids.WATER);
-
+        TagKey<Fluid> water = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:water"));
         TagKey<Fluid> oxygen = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:oxygen"));
         TagKey<Fluid> nitrogen = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:nitrogen"));
         TagKey<Fluid> hydrogen = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:hydrogen"));
@@ -47,13 +44,24 @@ public class Constants {
         TagKey<Fluid> argon = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:argon"));
         TagKey<Fluid> chlorine = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:chlorine"));
 
+        TagKey<Fluid> dilutedSulfuricAcid = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:diluted_sulfuric_acid"));
+        TagKey<Fluid> dilutedHydrochloricAcid = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:diluted_hydrochloric_acid"));
+
+        TagKey<Fluid> sulfuricAcid = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:sulfuric_acid"));
+        TagKey<Fluid> hydrochloricAcid = TagKey.create(Registries.FLUID, ResourceLocation.parse("c:hydrochloric_acid"));
 
 
+
+        IGNORED_FLUID_TAGS.add(water);
         IGNORED_FLUID_TAGS.add(oxygen);
         IGNORED_FLUID_TAGS.add(nitrogen);
         IGNORED_FLUID_TAGS.add(hydrogen);
         IGNORED_FLUID_TAGS.add(neon);
         IGNORED_FLUID_TAGS.add(argon);
         IGNORED_FLUID_TAGS.add(chlorine);
+        IGNORED_FLUID_TAGS.add(dilutedSulfuricAcid);
+        IGNORED_FLUID_TAGS.add(dilutedHydrochloricAcid);
+        IGNORED_FLUID_TAGS.add(sulfuricAcid);
+        IGNORED_FLUID_TAGS.add(hydrochloricAcid);
     }
 }

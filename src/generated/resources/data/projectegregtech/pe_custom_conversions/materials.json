@@ -113,6 +113,11 @@
       },
       {
         "type": "projecte:item",
+        "emc_value": 147456,
+        "tag": "c:ingots/tantalum"
+      },
+      {
+        "type": "projecte:item",
         "emc_value": 294912,
         "tag": "c:ingots/naquadah"
       },
@@ -184,12 +189,22 @@
       {
         "type": "projecte:item",
         "emc_value": 1152,
+        "tag": "c:dusts/silicon"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1152,
         "tag": "c:dusts/sodium"
       },
       {
         "type": "projecte:item",
         "emc_value": 2304,
         "tag": "c:dusts/boron"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2304,
+        "tag": "c:dusts/potassium"
       },
       {
         "type": "projecte:item",
