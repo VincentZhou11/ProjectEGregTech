@@ -40,8 +40,6 @@ public class GTRecipeProcessor {
             NormalizedSimpleStack output = outputMap.keySet().stream().findFirst().get();
             int outputAmount = outputMap.get(output);
             int multiplier = outputMultiplierMap.get(output);
-
-
             iMappingCollector.addConversion(outputAmount, output, applyMultiplier(inputMap, multiplier));
         }
         else {
