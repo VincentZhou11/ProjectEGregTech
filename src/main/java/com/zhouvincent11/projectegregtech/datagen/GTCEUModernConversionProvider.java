@@ -95,7 +95,6 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
 
                 // Dusts\
                 .before(dustTag("wood"), 8)
-//                .before(dustTag("iron"), 256*9)
                 .before(dustTag("sulfur"), 128*9)
                 .before(dustTag("arsenic"), 128*9)
                 .before(dustTag("silicon"), 128*9)
@@ -111,9 +110,6 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
                 .before(dustTag("gelatin"), 64)
 
                 .before(GTItems.STEM_CELLS, 8192)
-
-
-
 
         ;
 

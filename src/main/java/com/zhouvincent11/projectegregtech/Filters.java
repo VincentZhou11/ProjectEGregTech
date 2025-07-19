@@ -1,5 +1,6 @@
 package com.zhouvincent11.projectegregtech;
 
+import com.gregtechceu.gtceu.data.item.GTItems;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +29,6 @@ public class Filters {
     public static Predicate<FluidStack> DEFAULT_FLUID_OUTPUT_FILTER = fluidStack -> !isMember(fluidStack, Constants.IGNORED_FLUID_TAGS);
 
 
-
-    public static Predicate<ItemStack> MACERATOR_ITEM_INPUT_FILTER = itemStack -> itemStack.getTags().anyMatch(Constants.INGOTS::equals);
+    // Plant ball needed to produce bio-chaff -> bacteria -> wetware production chain
+    public static Predicate<ItemStack> MACERATOR_ITEM_INPUT_FILTER = itemStack -> itemStack.getTags().anyMatch(Constants.INGOTS::equals) || itemStack.getItem().equals(GTItems.PLANT_BALL.asItem());
 }
