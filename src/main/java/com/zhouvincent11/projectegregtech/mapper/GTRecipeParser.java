@@ -2,9 +2,9 @@ package com.zhouvincent11.projectegregtech.mapper;
 
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.kind.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.zhouvincent11.projectegregtech.Constants;
+import com.zhouvincent11.projectegregtech.Filters;
 import com.zhouvincent11.projectegregtech.Projectegregtech;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -23,14 +23,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 public class GTRecipeParser {
 
-    private Map<ItemStack, Integer> itemInputs;
-    private Map<FluidStack, Integer> fluidInputs;
+    private final Map<ItemStack, Integer> itemInputs;
+    private final Map<FluidStack, Integer> fluidInputs;
 
-    private Map<ItemStack, Integer> itemOutputs;
-    private Map<FluidStack, Integer> fluidOutputs;
+    private final Predicate<ItemStack> itemInputPredicate;
+    private final Predicate<FluidStack> fluidInputPredicate;
+
+    private final Map<ItemStack, Integer> itemOutputs;
+    private final Map<FluidStack, Integer> fluidOutputs;
+
+    private final Predicate<ItemStack> itemOutputPredicate;
+    private final Predicate<FluidStack> fluidOutputPredicate;
+
 
     private Map<NormalizedSimpleStack, Integer> outputMultipliers;
 
@@ -110,8 +118,7 @@ public class GTRecipeParser {
     public Object2IntMap<NormalizedSimpleStack> getFilteredItemInputs() {
         Object2IntMap<NormalizedSimpleStack> filteredItemInputs = new Object2IntOpenHashMap<>();
         this.itemInputs.keySet().stream()
-                .filter(itemStack -> !Constants.NON_CONSUMED_ITEMS.contains(itemStack.getItem()))
-                .filter(itemStack -> !isItemTagMember(itemStack, Constants.NON_CONSUMED_ITEM_TAGS))
+                .filter(this.itemInputPredicate)
                 .forEach(itemStack -> {
                     filteredItemInputs.put(NSSItem.createItem(itemStack), this.itemInputs.get(itemStack));
                 });
@@ -121,6 +128,7 @@ public class GTRecipeParser {
     public Object2IntMap<NormalizedSimpleStack> getFilteredFluidInputs() {
         Object2IntMap<NormalizedSimpleStack> filteredFluidInputs = new Object2IntOpenHashMap<>();
         this.fluidInputs.keySet().stream()
+                .filter(this.fluidInputPredicate)
                 .forEach(fluidStack -> {
                     filteredFluidInputs.put(NSSFluid.createFluid(fluidStack), this.fluidInputs.get(fluidStack));
                 });
@@ -136,10 +144,20 @@ public class GTRecipeParser {
 
     public Map<NormalizedSimpleStack, Integer> getFilteredItemOutputs() {
         Map<NormalizedSimpleStack, Integer> filterItemOutputs = new HashMap<>();
-        this.itemOutputs.keySet().stream()
-                .forEach(itemStack -> {
-                    filterItemOutputs.put(NSSItem.createItem(itemStack), this.itemOutputs.get(itemStack));
-                });
+
+        // If recipe produces only one item with no fluid, no filtering required
+        if (this.itemOutputs.size() == 1 && this.fluidOutputs.isEmpty()) {
+            ItemStack itemOutput = this.itemOutputs.keySet().stream().findFirst().get();
+            filterItemOutputs.put(NSSItem.createItem(itemOutput), this.itemOutputs.get(itemOutput));
+        }
+        // Else, filter items
+        else  {
+            this.itemOutputs.keySet().stream()
+                    .filter(this.itemOutputPredicate)
+                    .forEach(itemStack -> {
+                filterItemOutputs.put(NSSItem.createItem(itemStack), this.itemOutputs.get(itemStack));
+            });
+        }
         return filterItemOutputs;
     }
 
@@ -154,7 +172,7 @@ public class GTRecipeParser {
         // Else, filter fluids
         else  {
             this.fluidOutputs.keySet().stream()
-                    .filter(fluidStack -> !isFluidTagMember(fluidStack, Constants.IGNORED_FLUID_TAGS))
+                    .filter(this.fluidOutputPredicate)
                     .forEach(fluid -> {
                 filterFluidOutputs.put(NSSFluid.createFluid(fluid), this.fluidOutputs.get(fluid));
             });
@@ -170,11 +188,29 @@ public class GTRecipeParser {
     }
 
     public GTRecipeParser(GTRecipe recipe) {
+        this(recipe, null, null, null, null);
+    }
+
+    public GTRecipeParser(GTRecipe recipe,
+                          Predicate<ItemStack> itemInputPredicate,
+                          Predicate<FluidStack> fluidInputPredicate,
+                          Predicate<ItemStack> itemOutputPredicate,
+                          Predicate<FluidStack> fluidOutputPredicate) {
         this.itemInputs = new HashMap<>();
         this.fluidInputs = new HashMap<>();
         this.itemOutputs = new HashMap<>();
         this.fluidOutputs = new HashMap<>();
         this.outputMultipliers = new HashMap<>();
+
+        if (itemInputPredicate == null) itemInputPredicate = Filters.DEFAULT_ITEM_INPUT_FILTER;
+        this.itemInputPredicate = itemInputPredicate;
+        if (fluidInputPredicate == null) fluidInputPredicate = Filters.DEFAULT_FLUID_INPUT_FILTER;
+        this.fluidInputPredicate = fluidInputPredicate;
+        if (itemOutputPredicate == null) itemOutputPredicate = Filters.DEFAULT_ITEM_OUTPUT_FILTER;
+        this.itemOutputPredicate = itemOutputPredicate;
+        if (fluidOutputPredicate == null) fluidOutputPredicate = Filters.DEFAULT_FLUID_OUTPUT_FILTER;
+        this.fluidOutputPredicate = fluidOutputPredicate;
+
         this.parseItemInputs(recipe);
         this.parseFluidInputs(recipe);
         this.parseItemOutputs(recipe);

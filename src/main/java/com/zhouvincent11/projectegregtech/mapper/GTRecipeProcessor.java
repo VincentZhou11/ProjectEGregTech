@@ -1,22 +1,32 @@
 package com.zhouvincent11.projectegregtech.mapper;
 
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.recipe.kind.GTRecipe;
+import com.gregtechceu.gtceu.data.recipe.GTRecipeTypes;
+import com.zhouvincent11.projectegregtech.Filters;
 import com.zhouvincent11.projectegregtech.Projectegregtech;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import moze_intel.projecte.api.mapper.collector.IMappingCollector;
 import moze_intel.projecte.api.nss.NormalizedSimpleStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 public class GTRecipeProcessor {
 
-    public IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector;
+    public final IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector;
+    public final RecipeManager recipeManager;
 
     public GTRecipeProcessor(IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector) {
         this.iMappingCollector = iMappingCollector;
+        this.recipeManager = ServerLifecycleHooks.getCurrentServer().getRecipeManager();
+        Projectegregtech.LOGGER.info("GTRecipeProcessor initialized");
     }
 
     private Object2IntMap<NormalizedSimpleStack> applyMultiplier (Object2IntMap<NormalizedSimpleStack> input, double multiplier) {
@@ -30,22 +40,25 @@ public class GTRecipeProcessor {
     private void mapOnlyMany2One(Object2IntMap<NormalizedSimpleStack> inputMap,
                                  Map<NormalizedSimpleStack, Integer> outputMap,
                                  Map<NormalizedSimpleStack, Integer> outputMultiplierMap,
-                                 IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector,
                                  boolean verbose) {
         int totalOutputs = outputMap.size();
+        int totalInputs = inputMap.size();
 
-        if (totalOutputs == 0) {
-            if(verbose) Projectegregtech.LOGGER.info("No outputs for recipe");
+        if (totalInputs == 0) {
+            if(verbose) Projectegregtech.LOGGER.info("No inputs for recipe, ignoring");
+        }
+        else if (totalOutputs == 0) {
+            if(verbose) Projectegregtech.LOGGER.info("No outputs for recipe, ignoring");
         }
         else if (totalOutputs == 1) {
             NormalizedSimpleStack output = outputMap.keySet().stream().findFirst().get();
             int outputAmount = outputMap.get(output);
             int multiplier = outputMultiplierMap.get(output);
-            iMappingCollector.addConversion(outputAmount, output, applyMultiplier(inputMap, multiplier));
-            if (verbose) Projectegregtech.LOGGER.info("Mapped {} to {}x{}", inputMap, output, outputAmount);
+            this.iMappingCollector.addConversion(outputAmount, output, applyMultiplier(inputMap, multiplier));
+            if (verbose) Projectegregtech.LOGGER.info("Mapped {} to {}x{}", inputMap, outputAmount, output);
         }
         else {
-            if(verbose) Projectegregtech.LOGGER.info("Multiple outputs for recipe");
+            if(verbose) Projectegregtech.LOGGER.info("Multiple outputs for recipe, ignoring");
         }
     }
 
@@ -63,63 +76,65 @@ public class GTRecipeProcessor {
 
     }
 
-    private void processGTRecipe (GTRecipe recipe,
-                                  IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector, boolean verbose) {
+    private void processGTRecipe (GTRecipe recipe, boolean verbose) {
         GTRecipeParser parser = new GTRecipeParser(recipe);
-        if (verbose) {
-            Projectegregtech.LOGGER.info(parser.toString());}
-        mapOnlyMany2One(parser.getFilteredInputs(), parser.getFilteredOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
+        if (verbose) Projectegregtech.LOGGER.info(parser.toString());
+        mapOnlyMany2One(parser.getFilteredInputs(), parser.getFilteredOutputs(), parser.getOutputMultipliers(), verbose);
 
     }
 
-    public void processGTRecipes (String name, List<RecipeHolder<GTRecipe>> recipeHolders, boolean verbose) {
-        Projectegregtech.LOGGER.info("Adding {} recipes", name);
+    public void processGTRecipes (GTRecipeType type, boolean verbose) {
+        Projectegregtech.LOGGER.info("Adding {} recipes", type.getName());
 
-        recipeHolders.stream().forEach(recipe -> {
-            processGTRecipe(recipe.value(), this.iMappingCollector, verbose);
+
+        BiConsumer<GTRecipe, Boolean> consumer;
+
+        if (type == GTRecipeTypes.VACUUM_RECIPES) {
+            consumer = this::processVacuumFreezerRecipe;
+        }
+        else if (type == GTRecipeTypes.MACERATOR_RECIPES) {
+            consumer = this::processMaceratorRecipe;
+        }
+        else {
+            consumer = this::processGTRecipe;
+        }
+
+        this.recipeManager.getAllRecipesFor(type).stream().forEach(recipe -> {
+            consumer.accept(recipe.value(), verbose);
         });
 
     }
 
-    public void processGTRecipes (String name, List<RecipeHolder<GTRecipe>> recipeHolders) {
-        Projectegregtech.LOGGER.info("Adding {} recipes", name);
-
-        recipeHolders.stream().forEach(recipe -> {
-            processGTRecipe(recipe.value(), this.iMappingCollector, false);
-        });
-
+    public void processGTRecipes (GTRecipeType type) {
+        processGTRecipes(type, false);
     }
 
-    private void processVacuumFreezerRecipe(GTRecipe recipe,
-                                            IMappingCollector<NormalizedSimpleStack, Long> iMappingCollector,
-                                            boolean verbose) {
+    private void processVacuumFreezerRecipe(GTRecipe recipe, boolean verbose) {
         GTRecipeParser parser = new GTRecipeParser(recipe);
         if (verbose) {Projectegregtech.LOGGER.info(parser.toString());}
 
         // Gas liquefaction recipes
         if(parser.getFluidInputsSize() == 1 && parser.getFluidOutputsSize() == 1 && parser.getItemInputsSize() == 0 && parser.getItemOutputsSize() == 0) {
-            mapOnlyMany2One(parser.getFilteredFluidInputs(), parser.getFilteredFluidOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
+            mapOnlyMany2One(parser.getFilteredFluidInputs(), parser.getFilteredFluidOutputs(), parser.getOutputMultipliers(), verbose);
         }
         // Hot ingot cooling with gas coolant, ignore gas coolant
         else if(parser.getFluidInputsSize() == 1 && parser.getFluidOutputsSize() == 1 && parser.getItemInputsSize() == 1 && parser.getItemOutputsSize() == 1) {
-            mapOnlyMany2One(parser.getFilteredItemInputs(), parser.getFilteredItemOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
+            mapOnlyMany2One(parser.getFilteredItemInputs(), parser.getFilteredItemOutputs(), parser.getOutputMultipliers(), verbose);
         }
         // Hot ingot cooling
         else if(parser.getFluidInputsSize() == 0 && parser.getFluidOutputsSize() == 0 && parser.getItemInputsSize() == 1 && parser.getItemOutputsSize() == 1) {
-            mapOnlyMany2One(parser.getFilteredItemInputs(), parser.getFilteredItemOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
+            mapOnlyMany2One(parser.getFilteredItemInputs(), parser.getFilteredItemOutputs(), parser.getOutputMultipliers(), verbose);
         }
         else {
-            mapOnlyMany2One(parser.getFilteredInputs(), parser.getFilteredOutputs(), parser.getOutputMultipliers(), iMappingCollector, verbose);
+            mapOnlyMany2One(parser.getFilteredInputs(), parser.getFilteredOutputs(), parser.getOutputMultipliers(), verbose);
         }
     }
 
-    public void processVacuumFreezerRecipes (String name, List<RecipeHolder<GTRecipe>> recipeHolders) {
-        Projectegregtech.LOGGER.info("Adding {} recipes", name);
-
-        recipeHolders.stream().forEach(recipe -> {
-            processVacuumFreezerRecipe(recipe.value(), this.iMappingCollector, false);
-        });
-
+    private void processMaceratorRecipe(GTRecipe recipe, boolean verbose) {
+        GTRecipeParser parser = new GTRecipeParser(recipe, Filters.MACERATOR_ITEM_INPUT_FILTER, null, null, null);
+        if (verbose) {Projectegregtech.LOGGER.info(parser.toString());}
+        mapOnlyMany2One(parser.getFilteredInputs(), parser.getFilteredOutputs(), parser.getOutputMultipliers(), verbose);
     }
+
 
 }

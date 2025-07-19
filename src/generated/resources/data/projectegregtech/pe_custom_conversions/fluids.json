@@ -1,111 +1,111 @@
 {
-  "values": {
-    "before": [
-      {
-        "type": "projecte:fluid",
-        "emc_value": 16,
-        "tag": "c:oxygen"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 16,
-        "tag": "c:hydrogen"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 16,
-        "tag": "c:nitrogen"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 32,
-        "tag": "c:helium"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:neon"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:radon"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:argon"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:hydrogen_sulfide"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:acetone"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:phenol"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:chlorine"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:fluorine"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:methanol"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:ethylene"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:propane"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:cumene"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:benzene"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:cyclohexane"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:ammonia"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 128,
-        "tag": "c:nitric_oxide"
-      },
-      {
-        "type": "projecte:fluid",
-        "emc_value": 4,
-        "tag": "c:glue"
-      }
-    ]
-  }
+    "values": {
+        "before": [
+            {
+                "type": "projecte:fluid",
+                "emc_value": 16,
+                "tag": "c:oxygen"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 16,
+                "tag": "c:hydrogen"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 16,
+                "tag": "c:nitrogen"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 32,
+                "tag": "c:helium"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:neon"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:radon"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:argon"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:hydrogen_sulfide"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:acetone"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:phenol"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:chlorine"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:fluorine"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:methanol"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:ethylene"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:propane"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:cumene"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:benzene"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:cyclohexane"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:ammonia"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 128,
+                "tag": "c:nitric_oxide"
+            },
+            {
+                "type": "projecte:fluid",
+                "emc_value": 4,
+                "tag": "c:glue"
+            }
+        ]
+    }
 }

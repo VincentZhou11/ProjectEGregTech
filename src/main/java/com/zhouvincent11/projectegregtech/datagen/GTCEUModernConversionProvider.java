@@ -44,9 +44,12 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
         Projectegregtech.LOGGER.info("Adding custom conversions");
 
         createConversionBuilder(Projectegregtech.RL("materials"))
+
+//                .before(ingotTag("steel"), 128*9)
                 .before(ingotTag("zinc"), 128*9)
                 .before(ingotTag("cobalt"), 4096*9)
                 .before(ingotTag("antimony"), 4096*9)
+                .before(ingotTag("beryllium"), 4096*9)
 
                 .before(ingotTag("tungsten"), 8192*9)
                 .before(ingotTag("manganese"), 8192*9)
@@ -92,7 +95,7 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
 
                 // Dusts\
                 .before(dustTag("wood"), 8)
-                .before(dustTag("iron"), 256*9)
+//                .before(dustTag("iron"), 256*9)
                 .before(dustTag("sulfur"), 128*9)
                 .before(dustTag("arsenic"), 128*9)
                 .before(dustTag("silicon"), 128*9)

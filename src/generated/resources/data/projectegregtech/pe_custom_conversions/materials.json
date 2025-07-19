@@ -1,251 +1,251 @@
 {
-  "values": {
-    "before": [
-      {
-        "type": "projecte:item",
-        "emc_value": 1152,
-        "tag": "c:ingots/zinc"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 36864,
-        "tag": "c:ingots/cobalt"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 36864,
-        "tag": "c:ingots/antimony"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 73728,
-        "tag": "c:ingots/tungsten"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 73728,
-        "tag": "c:ingots/manganese"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 73728,
-        "tag": "c:ingots/chromium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 73728,
-        "tag": "c:ingots/titanium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 73728,
-        "tag": "c:ingots/gallium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 73728,
-        "tag": "c:ingots/indium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 73728,
-        "tag": "c:ingots/molybdenum"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 73728,
-        "tag": "c:ingots/platinum"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 73728,
-        "tag": "c:ingots/neodymium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/rhodium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/palladium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/iridium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/trinium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/niobium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/vanadium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/samarium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/europium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/ruthenium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/yttrium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 147456,
-        "tag": "c:ingots/tantalum"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 294912,
-        "tag": "c:ingots/naquadah"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 294912,
-        "tag": "c:ingots/americium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 2304,
-        "tag": "c:ingots/polyethylene"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 4608,
-        "tag": "c:ingots/polytetrafluoroethylene"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 4608,
-        "tag": "c:ingots/polyvinyl_chloride"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 4608,
-        "tag": "c:ingots/polyphenylene_sulfide"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 18432,
-        "tag": "c:ingots/polybenzimidazole"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 18432,
-        "tag": "c:ingots/epoxy"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 9216,
-        "tag": "c:ingots/silicone_rubber"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 18432,
-        "tag": "c:ingots/styrene_butadiene_rubber"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 8,
-        "tag": "c:dusts/wood"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 2304,
-        "tag": "c:dusts/iron"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 1152,
-        "tag": "c:dusts/sulfur"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 1152,
-        "tag": "c:dusts/arsenic"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 1152,
-        "tag": "c:dusts/silicon"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 1152,
-        "tag": "c:dusts/sodium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 2304,
-        "tag": "c:dusts/boron"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 2304,
-        "tag": "c:dusts/potassium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 1152,
-        "tag": "c:dusts/phosphorus"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 1152,
-        "tag": "c:dusts/graphite"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 9216,
-        "tag": "c:dusts/barium"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 9216,
-        "tag": "c:dusts/apatite"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 884736,
-        "tag": "c:dusts/enriched_naquadah"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 64,
-        "tag": "c:dusts/meat"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 64,
-        "tag": "c:dusts/gelatin"
-      },
-      {
-        "type": "projecte:item",
-        "emc_value": 8192,
-        "id": "gtceu:stem_cells"
-      }
-    ]
-  }
+    "values": {
+        "before": [
+            {
+                "type": "projecte:item",
+                "emc_value": 1152,
+                "tag": "c:ingots/zinc"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 36864,
+                "tag": "c:ingots/cobalt"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 36864,
+                "tag": "c:ingots/antimony"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 36864,
+                "tag": "c:ingots/beryllium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 73728,
+                "tag": "c:ingots/tungsten"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 73728,
+                "tag": "c:ingots/manganese"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 73728,
+                "tag": "c:ingots/chromium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 73728,
+                "tag": "c:ingots/titanium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 73728,
+                "tag": "c:ingots/gallium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 73728,
+                "tag": "c:ingots/indium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 73728,
+                "tag": "c:ingots/molybdenum"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 73728,
+                "tag": "c:ingots/platinum"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 73728,
+                "tag": "c:ingots/neodymium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/rhodium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/palladium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/iridium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/trinium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/niobium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/vanadium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/samarium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/europium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/ruthenium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/yttrium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/tantalum"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 294912,
+                "tag": "c:ingots/naquadah"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 294912,
+                "tag": "c:ingots/americium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 2304,
+                "tag": "c:ingots/polyethylene"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 4608,
+                "tag": "c:ingots/polytetrafluoroethylene"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 4608,
+                "tag": "c:ingots/polyvinyl_chloride"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 4608,
+                "tag": "c:ingots/polyphenylene_sulfide"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 18432,
+                "tag": "c:ingots/polybenzimidazole"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 18432,
+                "tag": "c:ingots/epoxy"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 9216,
+                "tag": "c:ingots/silicone_rubber"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 18432,
+                "tag": "c:ingots/styrene_butadiene_rubber"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 8,
+                "tag": "c:dusts/wood"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 1152,
+                "tag": "c:dusts/sulfur"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 1152,
+                "tag": "c:dusts/arsenic"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 1152,
+                "tag": "c:dusts/silicon"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 1152,
+                "tag": "c:dusts/sodium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 2304,
+                "tag": "c:dusts/boron"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 2304,
+                "tag": "c:dusts/potassium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 1152,
+                "tag": "c:dusts/phosphorus"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 1152,
+                "tag": "c:dusts/graphite"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 9216,
+                "tag": "c:dusts/barium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 9216,
+                "tag": "c:dusts/apatite"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 884736,
+                "tag": "c:dusts/enriched_naquadah"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 64,
+                "tag": "c:dusts/meat"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 64,
+                "tag": "c:dusts/gelatin"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 8192,
+                "id": "gtceu:stem_cells"
+            }
+        ]
+    }
 }

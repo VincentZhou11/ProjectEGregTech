@@ -37,6 +37,10 @@ repositories {
         forRepository { maven { url = "https://api.modrinth.com/maven/" } }
         filter { includeGroup("maven.modrinth") }
     }
+    exclusiveContent { // Configuration
+        forRepository { maven { url = "https://api.repsy.io/mvn/toma/public/" } }
+        filter { includeGroup('dev.toma.configuration') }
+    }
     maven {
         // location of the maven that hosts JEI files since January 2023
         name = "Jared's maven"

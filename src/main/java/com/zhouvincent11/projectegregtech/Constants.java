@@ -2,7 +2,9 @@ package com.zhouvincent11.projectegregtech;
 
 import com.gregtechceu.gtceu.data.fluid.GTFluids;
 import com.gregtechceu.gtceu.data.item.GTItems;
+import com.gregtechceu.gtceu.data.item.GTMaterialItems;
 import com.gregtechceu.gtceu.data.material.GTElements;
+import com.gregtechceu.gtceu.data.material.GTMaterials;
 import com.gregtechceu.gtceu.integration.emi.orevein.GTBedrockFluid;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -20,9 +22,14 @@ public class Constants {
     public static final Set<TagKey<Item>> NON_CONSUMED_ITEM_TAGS = new HashSet<>();
 
     public static final Set<TagKey<Fluid>> IGNORED_FLUID_TAGS = new HashSet<>();
+    public static final Set<TagKey<Item>> IGNORED_ITEM_TAGS = new HashSet<>();
+
+    public static final TagKey<Item> INGOTS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:ingots"));
+    public static final TagKey<Item> NUGGETS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:nuggets"));
+    public static final TagKey<Item> DUSTS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:dusts"));
 
     static {
-        NON_CONSUMED_ITEMS.add(GTItems.INTEGRATED_CIRCUIT.asItem());
+        NON_CONSUMED_ITEMS.add(GTItems.PROGRAMMED_CIRCUIT.asItem());
         NON_CONSUMED_ITEMS.add(GTItems.TOOL_DATA_STICK.asItem());
         NON_CONSUMED_ITEMS.add(GTItems.TOOL_DATA_ORB.asItem());
         NON_CONSUMED_ITEMS.add(GTItems.TOOL_DATA_MODULE.asItem());
@@ -63,5 +70,13 @@ public class Constants {
         IGNORED_FLUID_TAGS.add(dilutedHydrochloricAcid);
         IGNORED_FLUID_TAGS.add(sulfuricAcid);
         IGNORED_FLUID_TAGS.add(hydrochloricAcid);
+
+        TagKey<Item> ash = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:dusts/ash"));
+        TagKey<Item> dark_ash = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:dusts/dark_ash"));
+        TagKey<Item> tiny_dark_ash = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:tiny_dusts/dark_ash"));
+
+        IGNORED_ITEM_TAGS.add(ash);
+        IGNORED_ITEM_TAGS.add(dark_ash);
+        IGNORED_ITEM_TAGS.add(tiny_dark_ash);
     }
 }
