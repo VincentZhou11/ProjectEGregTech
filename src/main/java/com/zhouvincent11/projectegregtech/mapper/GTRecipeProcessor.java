@@ -9,14 +9,11 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import moze_intel.projecte.api.mapper.collector.IMappingCollector;
 import moze_intel.projecte.api.nss.NormalizedSimpleStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 
 public class GTRecipeProcessor {
 
@@ -88,13 +85,18 @@ public class GTRecipeProcessor {
 
 
         BiConsumer<GTRecipe, Boolean> consumer;
-
         if (type == GTRecipeTypes.VACUUM_RECIPES) {
             consumer = this::processVacuumFreezerRecipe;
         }
         else if (type == GTRecipeTypes.MACERATOR_RECIPES) {
             consumer = this::processMaceratorRecipe;
         }
+//        else if (type == GTRecipeTypes.THERMAL_CENTRIFUGE_RECIPES) {
+//            consumer = this::processThermalCentrifugeRecipe;
+//        }
+//        else if (type == GTRecipeTypes.ORE_WASHER_RECIPES) {
+//            consumer = this::processOreWasherRecipe;
+//        }
         else {
             consumer = this::processGTRecipe;
         }
@@ -131,10 +133,31 @@ public class GTRecipeProcessor {
     }
 
     private void processMaceratorRecipe(GTRecipe recipe, boolean verbose) {
-        GTRecipeParser parser = new GTRecipeParser(recipe, Filters.MACERATOR_ITEM_INPUT_FILTER, null, null, null);
+        GTRecipeParser parser = new GTRecipeParser(recipe,
+                Filters.MACERATOR_ITEM_INPUT_FILTER,
+                null,
+                Filters.MACERATOR_ITEM_OUTPUT_FILTER,
+                null);
         if (verbose) {Projectegregtech.LOGGER.info(parser.toString());}
         mapOnlyMany2One(parser.getFilteredInputs(), parser.getFilteredOutputs(), parser.getOutputMultipliers(), verbose);
     }
 
+
+    // We ignore the part that crushed ore turns to refined ore. We only want to assign values to the chance oupts
+    private void processThermalCentrifugeRecipe(GTRecipe recipe, boolean verbose) {
+        GTRecipeParser parser = new GTRecipeParser(recipe, null, null,
+                Filters.ORE_BYPRODUCT_ITEM_OUTPUT_FILTER, null);
+        if (verbose) {Projectegregtech.LOGGER.info(parser.toString());}
+        mapOnlyMany2One(parser.getFilteredInputs(), parser.getFilteredOutputs(), parser.getOutputMultipliers(), verbose);
+    }
+
+    private void processOreWasherRecipe(GTRecipe recipe, boolean verbose) {
+        GTRecipeParser parser = new GTRecipeParser(recipe,
+                null,
+                Filters.IGNORE_ALL_FLUIDS_FILTER,
+                Filters.ORE_BYPRODUCT_ITEM_OUTPUT_FILTER,
+                null);
+        if (verbose) {Projectegregtech.LOGGER.info(parser.toString());}
+    }
 
 }

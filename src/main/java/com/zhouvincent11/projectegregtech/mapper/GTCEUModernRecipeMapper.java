@@ -50,7 +50,7 @@ public class GTCEUModernRecipeMapper implements IEMCMapper<NormalizedSimpleStack
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.WIREMILL_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.LATHE_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.MIXER_RECIPES);
-        gtRecipeProcessor.processGTRecipes(GTRecipeTypes.MACERATOR_RECIPES);
+        gtRecipeProcessor.processGTRecipes(GTRecipeTypes.MACERATOR_RECIPES, true);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.BENDER_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.FORMING_PRESS_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.EXTRUDER_RECIPES);
@@ -62,8 +62,9 @@ public class GTCEUModernRecipeMapper implements IEMCMapper<NormalizedSimpleStack
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.ASSEMBLER_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.CIRCUIT_ASSEMBLER_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.FLUID_SOLIDFICATION_RECIPES);
-        gtRecipeProcessor.processGTRecipes(GTRecipeTypes.CENTRIFUGE_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.LASER_ENGRAVER_RECIPES);
+        gtRecipeProcessor.processGTRecipes(GTRecipeTypes.CANNER_RECIPES);
+        gtRecipeProcessor.processGTRecipes(GTRecipeTypes.CENTRIFUGE_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.CHEMICAL_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.CHEMICAL_BATH_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.ELECTROLYZER_RECIPES);
@@ -83,6 +84,11 @@ public class GTCEUModernRecipeMapper implements IEMCMapper<NormalizedSimpleStack
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.FLUID_HEATER_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.BREWING_RECIPES);
         gtRecipeProcessor.processGTRecipes(GTRecipeTypes.DISTILLERY_RECIPES);
+
+        // Dangerous
+//        gtRecipeProcessor.processGTRecipes(GTRecipeTypes.THERMAL_CENTRIFUGE_RECIPES, true);
+//        gtRecipeProcessor.processGTRecipes(GTRecipeTypes.ORE_WASHER_RECIPES);
+
 
 
         Projectegregtech.LOGGER.info("Finished adding custom mappings");

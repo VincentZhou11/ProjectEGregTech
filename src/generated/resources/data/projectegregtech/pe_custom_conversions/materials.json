@@ -3,123 +3,98 @@
         "before": [
             {
                 "type": "projecte:item",
-                "emc_value": 1152,
+                "emc_value": 9216,
                 "tag": "c:ingots/zinc"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 36864,
+                "emc_value": 9216,
                 "tag": "c:ingots/cobalt"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 36864,
+                "emc_value": 9216,
                 "tag": "c:ingots/antimony"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 36864,
+                "emc_value": 9216,
                 "tag": "c:ingots/beryllium"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 73728,
-                "tag": "c:ingots/tungsten"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 73728,
+                "emc_value": 9216,
                 "tag": "c:ingots/manganese"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 73728,
-                "tag": "c:ingots/chromium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 73728,
-                "tag": "c:ingots/titanium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 73728,
-                "tag": "c:ingots/gallium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 73728,
+                "emc_value": 18432,
                 "tag": "c:ingots/indium"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 73728,
+                "emc_value": 18432,
                 "tag": "c:ingots/molybdenum"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 73728,
-                "tag": "c:ingots/platinum"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 73728,
+                "emc_value": 18432,
                 "tag": "c:ingots/neodymium"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 147456,
-                "tag": "c:ingots/rhodium"
+                "emc_value": 18432,
+                "tag": "c:ingots/uranium"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 147456,
-                "tag": "c:ingots/palladium"
+                "emc_value": 18432,
+                "tag": "c:ingots/thorium"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 147456,
-                "tag": "c:ingots/iridium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 147456,
-                "tag": "c:ingots/trinium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 147456,
-                "tag": "c:ingots/niobium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 147456,
+                "emc_value": 18432,
                 "tag": "c:ingots/vanadium"
             },
             {
                 "type": "projecte:item",
-                "emc_value": 147456,
-                "tag": "c:ingots/samarium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 147456,
-                "tag": "c:ingots/europium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 147456,
-                "tag": "c:ingots/ruthenium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 147456,
-                "tag": "c:ingots/yttrium"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 147456,
+                "emc_value": 18432,
                 "tag": "c:ingots/tantalum"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 18432,
+                "tag": "c:ingots/niobium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 18432,
+                "tag": "c:ingots/gallium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 36864,
+                "tag": "c:ingots/chromium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 72864,
+                "tag": "c:ingots/titanium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:ingots/tungsten"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:dusts/platinum_group_sludge"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 147456,
+                "tag": "c:dusts/rare_earth"
             },
             {
                 "type": "projecte:item",
@@ -129,7 +104,7 @@
             {
                 "type": "projecte:item",
                 "emc_value": 294912,
-                "tag": "c:ingots/americium"
+                "tag": "c:ingots/trinium"
             },
             {
                 "type": "projecte:item",
@@ -208,6 +183,16 @@
             },
             {
                 "type": "projecte:item",
+                "emc_value": 2304,
+                "tag": "c:dusts/lithium"
+            },
+            {
+                "type": "projecte:item",
+                "emc_value": 2304,
+                "tag": "c:dusts/magnesium"
+            },
+            {
+                "type": "projecte:item",
                 "emc_value": 1152,
                 "tag": "c:dusts/phosphorus"
             },
@@ -228,23 +213,199 @@
             },
             {
                 "type": "projecte:item",
-                "emc_value": 884736,
-                "tag": "c:dusts/enriched_naquadah"
-            },
-            {
-                "type": "projecte:item",
-                "emc_value": 64,
-                "tag": "c:dusts/meat"
+                "emc_value": 8192,
+                "id": "gtceu:stem_cells"
             },
             {
                 "type": "projecte:item",
                 "emc_value": 64,
                 "tag": "c:dusts/gelatin"
+            }
+        ],
+        "conversion": [
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 3,
+                        "tag": "c:dusts/platinum_group_sludge"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:dusts/inert_metal_mixture"
+                }
             },
             {
-                "type": "projecte:item",
-                "emc_value": 8192,
-                "id": "gtceu:stem_cells"
+                "count": 5,
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 6,
+                        "tag": "c:dusts/inert_metal_mixture"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:ingots/ruthenium"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 6,
+                        "tag": "c:dusts/inert_metal_mixture"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:ingots/rhodium"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 2,
+                        "tag": "c:dusts/platinum_group_sludge"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:dusts/platinum_raw"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 3,
+                        "tag": "c:dusts/platinum_raw"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:ingots/platinum"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 2,
+                        "tag": "c:dusts/platinum_group_sludge"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:dusts/palladium_raw"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 5,
+                        "tag": "c:dusts/palladium_raw"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:ingots/palladium"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 6,
+                        "tag": "c:dusts/platinum_group_sludge"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:dusts/rarest_metal_mixture"
+                }
+            },
+            {
+                "count": 5,
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 7,
+                        "tag": "c:dusts/rarest_metal_mixture"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:ingots/iridium"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 3,
+                        "tag": "c:dusts/rare_earth"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:small_dusts/samarium"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 2,
+                        "tag": "c:dusts/rare_earth"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:small_dusts/cerium"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 3,
+                        "tag": "c:dusts/rare_earth"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:small_dusts/yttrium"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 4,
+                        "tag": "c:dusts/rare_earth"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:small_dusts/lanthanum"
+                }
+            },
+            {
+                "ingredients": [
+                    {
+                        "type": "projecte:item",
+                        "amount": 10,
+                        "tag": "c:dusts/naquadah"
+                    }
+                ],
+                "output": {
+                    "type": "projecte:item",
+                    "tag": "c:dusts/enriched_naquadah"
+                }
             }
         ]
     }
