@@ -114,7 +114,7 @@ public class Constants {
 
 
     static {
-        NON_CONSUMED_ITEMS.add(GTItems.INTEGRATED_CIRCUIT.asItem());
+        NON_CONSUMED_ITEMS.add(GTItems.PROGRAMMED_CIRCUIT.asItem());
         NON_CONSUMED_ITEMS.add(GTItems.TOOL_DATA_STICK.asItem());
         NON_CONSUMED_ITEMS.add(GTItems.TOOL_DATA_ORB.asItem());
         NON_CONSUMED_ITEMS.add(GTItems.TOOL_DATA_MODULE.asItem());
