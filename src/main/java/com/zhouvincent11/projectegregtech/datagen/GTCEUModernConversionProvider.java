@@ -1,8 +1,6 @@
 package com.zhouvincent11.projectegregtech.datagen;
 
-import com.gregtechceu.gtceu.api.worldgen.OreVeinDefinition;
 import com.gregtechceu.gtceu.data.item.GTItems;
-import com.gregtechceu.gtceu.data.worldgen.GTOreVeins;
 import com.zhouvincent11.projectegregtech.Constants;
 import com.zhouvincent11.projectegregtech.Projectegregtech;
 import moze_intel.projecte.api.data.CustomConversionProvider;
@@ -131,7 +129,7 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
                 .conversion(smallDustTag("yttrium")).ingredient(dustTag("rare_earth"), Math.ceilDivExact(100,35)).end()
                 .conversion(smallDustTag("lanthanum")).ingredient(dustTag("rare_earth"), Math.ceilDivExact(100,25)).end()
 
-                // Naqadah
+                // Naquadah
                 .before(ingotTag("naquadah"), 32768 * 9)
                 .conversion(dustTag("enriched_naquadah")).ingredient(dustTag("naquadah"), 10/1).end()
 
@@ -247,9 +245,9 @@ public class GTCEUModernConversionProvider extends CustomConversionProvider {
          * basaltic_mineral_sand
          */
 
-        for (ResourceKey<OreVeinDefinition> key : GTOreVeins.ALL_KEYS) {
-            LOGGER.info(String.format("Vein: %s", key.location().getPath()));
-        }
+//        for (ResourceKey<OreVeinDefinition> key : GTOreVeins.ALL_KEYS) {
+//            LOGGER.info(String.format("Vein: %s", key.location().getPath()));
+//        }
         Projectegregtech.LOGGER.info("Adding ore processing conversiions");
         buildOreProeccessingProducts("iron", 2, 256);
         buildOreProeccessingProducts("copper", 2, 256);

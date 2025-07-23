@@ -86,4 +86,4 @@ versionRange = "[PE1.0.1,)"
 [[dependencies."${mod_id}"]]
 modId = "gtceu"
 type = "required"
-versionRange = "[7.0.0,)"
+versionRange = "[1.4.0,7.0.0)"

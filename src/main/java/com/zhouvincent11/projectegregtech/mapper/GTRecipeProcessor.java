@@ -1,7 +1,7 @@
 package com.zhouvincent11.projectegregtech.mapper;
 
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.recipe.kind.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.data.recipe.GTRecipeTypes;
 import com.zhouvincent11.projectegregtech.Filters;
 import com.zhouvincent11.projectegregtech.Projectegregtech;
