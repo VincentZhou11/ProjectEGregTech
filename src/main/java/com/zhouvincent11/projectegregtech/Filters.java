@@ -50,8 +50,7 @@ public class Filters {
     public static Predicate<ItemStack> MACERATOR_ITEM_OUTPUT_FILTER = itemStack ->
             !isMember(itemStack, Constants.ALL_PROCESSED_ORE_INTERMEDIATES)
             && DEFAULT_ITEM_OUTPUT_FILTER.test(itemStack)
-            && itemStack.getTags().noneMatch(Constants.RAW_MEAT::equals)
-            ;
+            && itemStack.getTags().noneMatch(Constants.TINY_BONE::equals);
 
     // Most ore processing intermediates are already assigned EMC values, we just need to assign emc values to byproducts
     // Thermal centrifuge: keep all inputs
